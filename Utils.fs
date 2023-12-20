@@ -1,14 +1,22 @@
 module Utils
-
+open System.Numerics
 open System.Text.RegularExpressions
 
 let parseIntSeq line =
-    let re = Regex(@"\d+")
+    let re = Regex(@"-?\d+")
 
     re.Matches(line)
     |> Seq.cast<Match>
     |> List.ofSeq
     |> List.map (fun m -> int m.Value)
+
+let parseBigIntSeq line =
+    let re = Regex(@"-?\d+")
+
+    re.Matches(line)
+    |> Seq.cast<Match>
+    |> List.ofSeq
+    |> List.map (fun m -> BigInteger.Parse m.Value)
 
 let mergeWith (f : 'B -> 'B -> 'B)  (a : Map<'A, 'B>) (b : Map<'A, 'B>) =
   Map.fold (fun s k v ->
